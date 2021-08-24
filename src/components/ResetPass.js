@@ -4,12 +4,14 @@ import {
   Container,
   CssBaseline,
   Grid,
+  IconButton,
   Link,
   makeStyles,
   TextField,
   Typography,
 } from "@material-ui/core";
 import RotateLeftIcon from "@material-ui/icons/RotateLeft";
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import PropTypes from "prop-types";
 import React from "react";
 
@@ -74,8 +76,13 @@ export const ResetPass = ({ handlechange, formSwitch, handleOnsubmit }) => {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="" onClick={() => formSwitch("login")} variant="body2">
-                Back.
+              <Link href="" onClick={() => formSwitch("login")} variant="h6" underline="none">
+                <IconButton size="small">
+                <ArrowBackIcon />
+              
+              Back
+                </IconButton>
+              
               </Link>
             </Grid>
           </Grid>

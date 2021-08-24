@@ -10,14 +10,13 @@ const useStyle = makeStyles(() => ({
 }));
 export default function Breadcrumb({ page }) {
   const classes = useStyle();
-  const handleClick = () => {};
   return (
     <Breadcrumbs
       aria-label="breadcrumb"
       separator="-"
       style={{ marginTop: "100px" }}
     >
-      <Link color="secondary" href="/" onClick={handleClick} underline="none">
+      <Link color="secondary" href="/" underline="none">
         {/* <HomeIco     /> */}
         <Typography className={classes.link}>Home</Typography>
       </Link>

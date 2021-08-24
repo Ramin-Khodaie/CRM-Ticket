@@ -1,3 +1,8 @@
+/**
+ * this component add a ticket to database which has particular subject,date and detail.
+ * it changes value of subject, date and detail by prop wiring and using change function.
+ * by clicking save button if all required items have been entered,data will save in database.
+ */
 import {
   Button,
   Grid,
@@ -19,6 +24,9 @@ const useStyle = makeStyles((theme) => ({
     maxHeight: "600",
     maxWidth: "800",
   },
+  submit:{
+    marginTop:"50px",    
+  }
 }));
 export default function AddTicket({ change, submit, ticket, Err }) {
   const classes = useStyle();
@@ -31,7 +39,6 @@ export default function AddTicket({ change, submit, ticket, Err }) {
         <TextField
           placeholder="Enter Subject"
           variant="outlined"
-          // required
           fullWidth
           id="subject"
           name="subject"
@@ -65,26 +72,29 @@ export default function AddTicket({ change, submit, ticket, Err }) {
         <TextareaAutosize
           rowsMax={5}
           aria-label="maximum height"
-          style={{ maxWidth: "100%" }}
+          style={{ width:"600px" ,height:"100px"}}
           onChange={change}
           value={ticket.detail}
           name="detail"
+          
         />
       </Grid>
       <Button
         type="submit"
         variant="contained"
         color="primary"
+        fullWidth
         className={classes.submit}
       >
-        Sign In
+        Save 
       </Button>
     </form>
   );
 }
-
+//this line of code defines type of incoming props.
 AddTicket.prototype = {
   change: PropTypes.func.isRequired,
   submit: PropTypes.func.isRequired,
   ticket: PropTypes.object.isRequired,
 };
+

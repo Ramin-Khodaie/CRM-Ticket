@@ -24,21 +24,20 @@ export default function AddTicketPage() {
     setTimeout(() => {
       setErr(errorData);
     }, 3000)
-  );
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    console.log(300, e.target);
-    setData({ ...initialData, [name]: value });
+    );
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      console.log(300, data);
+      setData({ ...data, [name]: value });
   };
-
+  
   console.log(500, err);
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     setErr(errorData);
     const isValid = await ShortText(data.subject);
-
-    console.log(600, isValid);
     !isValid && setErr({ ...err, subject: !isValid });
+    alert("Ticket saved successfuly.")
   };
   return (
     <div>

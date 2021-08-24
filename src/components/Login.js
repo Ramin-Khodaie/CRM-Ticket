@@ -4,6 +4,7 @@ import {
   Container,
   CssBaseline,
   Grid,
+  IconButton,
   Link,
   makeStyles,
   TextField,
@@ -90,9 +91,13 @@ export const Login = ({ handlechange, onsubmit, formSwitch }) => {
               <Link
                 href="#"
                 onClick={() => formSwitch("reset")}
-                variant="body2"
+                variant="h6"
+                underline="none"
               >
+                <IconButton size="small">
+
                 Forget Password.
+                </IconButton>
               </Link>
             </Grid>
           </Grid>
