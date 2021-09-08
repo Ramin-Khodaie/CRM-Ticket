@@ -3,7 +3,8 @@ import { makeStyles } from "@material-ui/core";
 import TicketTabel from "../../components/TicketTabel/TicketTable";
 import React from "react";
 import { Link } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
+import { fillSearchTicket } from "../../redux/ticketAction/ticketAction";
 const useStyle = makeStyles(() => ({
   buttonstyle: {
     position: "relative",
@@ -12,6 +13,13 @@ const useStyle = makeStyles(() => ({
 }));
 export default function TicketListcomponent({ change, tickets, data }) {
   const classes = useStyle();
+  const dispatch = useDispatch();
+
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    dispatch(fillSearchTicket(value));
+    console.log(800, value);
+  };
   return (
     <Grid container>
       <Grid
@@ -36,12 +44,12 @@ export default function TicketListcomponent({ change, tickets, data }) {
         <TextField
           type="search"
           variant="outlined"
-          onChange={change}
+          onChange={handleOnChange}
           style={{ width: "400px" }}
         />
       </Grid>
       <Grid xs={12} style={{ margin: "auto" }}>
-        <TicketTabel tickets={tickets} />
+        <TicketTabel />
       </Grid>
     </Grid>
   );
