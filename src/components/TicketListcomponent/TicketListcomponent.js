@@ -4,7 +4,7 @@ import TicketTabel from "../../components/TicketTabel/TicketTable";
 import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { fillSearchTicket } from "../../redux/ticketAction/ticketAction";
+import { fillSearchTicket } from "../../redux/ticket/ticketAction";
 const useStyle = makeStyles(() => ({
   buttonstyle: {
     position: "relative",

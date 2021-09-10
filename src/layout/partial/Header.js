@@ -16,6 +16,8 @@ import {
 import MenuIcon from "@material-ui/icons/Menu";
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../../redux/user/userAction";
 
 const useStyle = makeStyles(() => ({
   menuitem: {
@@ -25,8 +27,10 @@ const useStyle = makeStyles(() => ({
 export const Header = () => {
   const classes = useStyle();
   const history = useHistory();
-
+  const dispatch = useDispatch();
   const Logout = () => {
+    dispatch(logoutUser());
+    sessionStorage.removeItem("accessToken");
     history.push("/");
   };
   return (
@@ -55,7 +59,6 @@ export const Header = () => {
               onClick={Logout}
               style={{ textDecoration: "none", color: "#d6d2d2" }}
             ></Tab>{" "}
-            />
           </Tabs>
         </Toolbar>
       </AppBar>

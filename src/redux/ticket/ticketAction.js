@@ -3,10 +3,10 @@ import {
   fetchTicketLoading,
   fetchTicketSuccess,
   searchTickets,
-} from "../sliceReducers/ticketSlice";
+} from "./ticketSlice";
 
 import { getAllTicket } from "../../services/ticketServices";
-import axios from "axios";
+
 const fetchAllTickets = () => async (dispatch) => {
   dispatch(fetchTicketLoading());
 

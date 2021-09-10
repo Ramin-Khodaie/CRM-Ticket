@@ -3,7 +3,7 @@ import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import TicketListcomponent from "../../components/TicketListcomponent/TicketListcomponent";
 import { useState, useEffect } from "react";
 import ticket from "../../components/TicketTabel/DUMMY.json";
-import fetchAllTickets from "../../redux/ticketAction/ticketAction";
+import fetchAllTickets from "../../redux/ticket/ticketAction";
 import { useDispatch } from "react-redux";
 
 export default function TicketList() {
