@@ -18,7 +18,6 @@ export default function TicketListcomponent({ change, tickets, data }) {
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     dispatch(fillSearchTicket(value));
-    console.log(800, value);
   };
   return (
     <Grid container>

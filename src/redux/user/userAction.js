@@ -1,4 +1,9 @@
-import { loginPending, loginFail, loginSuccess } from "./loginSlice";
+import {
+  loginPending,
+  loginFail,
+  loginSuccess,
+  logoutSuccess,
+} from "./loginSlice";
 import { getUserPending, getUserSuccess, getUserFail } from "./userSlice";
 import { userLogin, getUserProfile, logout } from "../../services/userServices";
 export const loginUser = (data) => async (dispatch) => {
@@ -38,12 +43,16 @@ export const userProfile = () => async (dispatch) => {
   }
 };
 
-export const logoutUser = () => async (dispatch) => {
-  dispatch(getUserPending());
+export const logoutUser = () => (dispatch) => {
   try {
-    const result = await logout();
-    console.log(440, result);
+    const result = logout();
+    console.log(322, "im also  here", result);
+    if (result) {
+      dispatch(logoutSuccess());
+      dispatch(getUserSuccess(""));
+    }
   } catch (error) {
+    console.log(3222, error);
     dispatch(getUserFail(error));
   }
 };

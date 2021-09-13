@@ -17,8 +17,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { logout } from "../../services/userServices";
 import { logoutUser } from "../../redux/user/userAction";
-
 const useStyle = makeStyles(() => ({
   menuitem: {
     marginLeft: "auto",
@@ -31,6 +31,7 @@ export const Header = () => {
   const Logout = () => {
     dispatch(logoutUser());
     sessionStorage.removeItem("accessToken");
+    localStorage.removeItem("crm");
     history.push("/");
   };
   return (

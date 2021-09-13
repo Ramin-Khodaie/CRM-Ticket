@@ -9,7 +9,10 @@ import {
   makeStyles,
   Typography,
 } from "@material-ui/core";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import fetchAllTickets from "../../redux/ticket/ticketAction";
 const useStyles = makeStyles({
   table: {
     maxWidth: 800,
@@ -26,8 +29,13 @@ export default function TicketTabel() {
     (state) => state.ticket
   );
 
+  const dispatch = useDispatch();
   const classes = useStyles();
 
+  // dispatch(fetchAllTickets());
+  // useEffect(() => {
+  //   dispatch(fetchAllTickets());
+  // }, [dispatch]);
   if (isLoading) return <h2>Loading</h2>;
   if (error) return <h5>error.message</h5>;
   return (
@@ -67,11 +75,17 @@ export default function TicketTabel() {
                     {row._id}
                   </Typography>
                 </TableCell>
-                <TableCell align="left">
-                  <Typography variant="subtitle1" color="inherit">
-                    {row.subject}
-                  </Typography>
-                </TableCell>
+                <Link
+                  to={`/ticket/${row._id}`}
+                  style={{ textDecoration: "none" }}
+                >
+                  <TableCell align="left">
+                    <Typography variant="subtitle1" color="inherit">
+                      {row.subject}
+                    </Typography>
+                  </TableCell>
+                </Link>
+
                 <TableCell align="left">
                   <Typography variant="subtitle1" color="inherit">
                     {row.status}

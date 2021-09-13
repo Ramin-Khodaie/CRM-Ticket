@@ -10,7 +10,6 @@ import TableTicket from "../../components/TicketTabel/TicketTable";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import React from "react";
 import ticket from "../../components/TicketTabel/DUMMY.json";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 export default function Dashboard() {

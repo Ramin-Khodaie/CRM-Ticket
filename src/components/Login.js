@@ -13,7 +13,7 @@ import {
 import CircularProgress from "@material-ui/core/CircularProgress";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser, userProfile } from "../redux/user/userAction";
 import { useHistory } from "react-router-dom";
@@ -81,7 +81,10 @@ export const Login = ({ formSwitch }) => {
       history.push("/dashboard");
     }
   };
-  console.log(888, error);
+
+  useEffect(() => {
+    sessionStorage.getItem("accessToken") && history.push("/dashboard");
+  }, [history, isAuth]);
   const classes = useStyle();
   return (
     <Container>

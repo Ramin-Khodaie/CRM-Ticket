@@ -7,26 +7,11 @@ import fetchAllTickets from "../../redux/ticket/ticketAction";
 import { useDispatch } from "react-redux";
 
 export default function TicketList() {
-  const [str, setStr] = useState("");
-  const [tickets, setTickets] = useState(ticket);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchAllTickets());
-  }, [str, dispatch]);
-  // const handleChange = (e) => {
-  //   const { value } = e.target;
-  //   setStr(value);
-  //   searchTickets(value);
-  // };
-
-  // const searchTickets = (str) => {
-  //   const displayTicket = ticket.filter((t) =>
-  //     t.Subject.toLowerCase().includes(str.toLowerCase())
-  //   );
-
-  //   setTickets(displayTicket);
-  // };
+  }, [dispatch]);
 
   return (
     <Grid container>
