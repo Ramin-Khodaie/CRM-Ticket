@@ -7,8 +7,12 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSingleTicket } from "../../redux/ticket/ticketAction";
+import {
+  closeTicket,
+  fetchSingleTicket,
+} from "../../redux/ticket/ticketAction";
 import { userProfile } from "../../redux/user/userAction";
+import { resetReplyTicketSuccess } from "../../redux/ticket/ticketSlice";
 const useStyle = makeStyles(() => ({
   info: {
     marginTop: "150px",
@@ -26,21 +30,29 @@ export default function Ticket() {
   const { tid } = useParams();
 
   const dispatch = useDispatch();
-  const { isLoading, error, selectedTicket } = useSelector(
+  const { isLoading, error, selectedTicket, replymessage } = useSelector(
     (state) => state.ticket
   );
-
+  console.log(400, replymessage);
   useEffect(() => {
     dispatch(fetchSingleTicket(tid));
     dispatch(userProfile());
-  }, [dispatch]);
+    // return () => {
+    //   (replymessage || error) && dispatch(resetReplyTicketSuccess());
+    // };
+  }, [dispatch, replymessage, error]);
 
   return (
     <Grid container spacing={3}>
       <Breadcrumb page="Ticket" />
-      {isLoading && <CircularProgress color="secondary" thickness={3.6} />}
-      {error && <Alert severity="error">{error.message}</Alert>}
       <Grid xs={6} className={classes.info}>
+        {replymessage && (
+          <Alert variant="outlined" severity="info">
+            {replymessage}
+          </Alert>
+        )}
+        {isLoading && <CircularProgress color="secondary" thickness={3.6} />}
+        {error && <Alert severity="error">{error.message}</Alert>}
         <Typography variant="h6">
           Subject: <Typography> {selectedTicket.subject}</Typography>
         </Typography>
@@ -48,7 +60,12 @@ export default function Ticket() {
           Status: <Typography> {selectedTicket.status}</Typography>
         </Typography>
         <Typography variant="h6">
-          Date: <Typography> {selectedTicket.openAt}</Typography>
+          Date:{" "}
+          <Typography>
+            {" "}
+            {selectedTicket.openAt &&
+              new Date(selectedTicket.openAt).toLocaleString()}
+          </Typography>
         </Typography>
       </Grid>
       <Grid xs={6} className={classes.btn}>
@@ -56,6 +73,8 @@ export default function Ticket() {
           className={classes.buttonstyle}
           variant="contained"
           color="primary"
+          disabled={selectedTicket.status === "closed"}
+          onClick={() => dispatch(closeTicket(tid))}
         >
           Close Ticket
         </Button>

@@ -7,12 +7,10 @@ const logoutURL = rootURL + "user/logout";
 const getAccessTokeURL = rootURL + "tokens";
 
 export const userLogin = (formData) => {
-  console.log(880, formData);
   return new Promise(async (resolve, reject) => {
     try {
       const res = await axios.post(loginURL, formData);
       if (res) {
-        console.log(220, res);
         resolve(res.data);
       }
       if (res.data.status === "success") {
@@ -41,7 +39,6 @@ export const getUserProfile = () => {
       if (!res) {
         reject("No user");
       }
-      console.log(4300, accessToken, res);
       resolve(res);
     } catch (error) {
       reject(error);
@@ -60,7 +57,6 @@ export const logout = () => {
         },
       });
       if (res.status === "success") return resolve(res.data);
-      console.log(233, res.data);
     } catch (error) {
       return reject(error);
     }
@@ -79,13 +75,24 @@ export const fetchAccessToken = () => {
         });
         sessionStorage.setItem("accessToken", res.data.accessJWT);
         if (res) {
-          console.log(4004, sessionStorage.getItem("accessToken"));
           resolve(true);
         }
       } catch (error) {
-        console.log(666, error.message);
         reject(error);
       }
     });
   } else return false;
+};
+
+export const registrationuser = (data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res = await axios.post(getUserURL, data);
+      if (res.status === 200) {
+        resolve(res.data);
+      }
+    } catch (error) {
+      reject(error);
+    }
+  });
 };

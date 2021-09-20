@@ -11,7 +11,12 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
+import { ShortText } from "../../components/utils/Validation";
+import { useDispatch, useSelector } from "react-redux";
+import { addingNewTicket } from "../../redux/newTicket/newTicketAction";
+import { resNewTicketSuccess } from "../../redux/newTicket/newTicketSlice";
+import Alert from "@material-ui/lab/Alert";
 
 const useStyle = makeStyles((theme) => ({
   form: {
@@ -24,15 +29,52 @@ const useStyle = makeStyles((theme) => ({
     maxHeight: "600",
     maxWidth: "800",
   },
-  submit:{
-    marginTop:"50px",    
-  }
+  submit: {
+    marginTop: "5px",
+  },
 }));
-export default function AddTicket({ change, submit, ticket, Err }) {
+
+const initialData = {
+  subject: "",
+  issueDate: "",
+  message: "",
+};
+const errorData = {
+  subject: false,
+  issueDate: false,
+  message: false,
+};
+export default function AddTicket() {
   const classes = useStyle();
 
+  const [data, setData] = useState(initialData);
+  const [err, setErr] = useState(errorData);
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
+  const { newTicket } = useSelector((state) => state.newTicket);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setData({ ...data, [name]: value });
+  };
+
+  useEffect(() => {
+    return () => dispatch(resNewTicketSuccess());
+  }, [dispatch]);
+
+  const handleOnSubmit = async (e) => {
+    const ticketdata = {
+      ...data,
+      sender: user.name,
+    };
+    e.preventDefault();
+    setErr(errorData);
+    const isValid = await ShortText(data.subject);
+    !isValid && setErr({ ...err, subject: !isValid });
+    dispatch(addingNewTicket(ticketdata));
+    setData(initialData);
+  };
   return (
-    <form className={classes.form} onSubmit={submit}>
+    <form className={classes.form} onSubmit={handleOnSubmit}>
       <Grid xs={12} className={classes.root}>
         <Typography variant="h5">Subject</Typography>
 
@@ -43,17 +85,17 @@ export default function AddTicket({ change, submit, ticket, Err }) {
           id="subject"
           name="subject"
           type="text"
-          value={ticket.subject}
+          value={data.subject}
           margin="normal"
           autoComplete="email"
-          onChange={change}
+          onChange={handleChange}
         />
-        {Err.subject && (
+        {err.subject && (
           <Typography variant="subtitle2" color="error">
             Subject required
           </Typography>
         )}
-        <Typography>{Err.subject}</Typography>
+        <Typography>{err.subject}</Typography>
         <Typography variant="h5">Issue found</Typography>
 
         <TextField
@@ -63,38 +105,33 @@ export default function AddTicket({ change, submit, ticket, Err }) {
           fullWidth
           name="issueDate"
           type="date"
-          value={ticket.issueDate}
+          value={data.issueDate}
           id="issueDate"
-          onChange={change}
+          onChange={handleChange}
         />
 
         <Typography variant="h5">Detail</Typography>
         <TextareaAutosize
           rowsMax={5}
           aria-label="maximum height"
-          style={{ width:"600px" ,height:"100px"}}
-          onChange={change}
-          value={ticket.detail}
-          name="detail"
-          
+          style={{ width: "631px", height: "100px" }}
+          onChange={handleChange}
+          value={data.message}
+          name="message"
         />
       </Grid>
-      <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-        fullWidth
-        className={classes.submit}
-      >
-        Save 
-      </Button>
+      <Grid>
+        {newTicket && <Alert severity="info">{newTicket}</Alert>}
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          fullWidth
+          className={classes.submit}
+        >
+          Save
+        </Button>
+      </Grid>
     </form>
   );
 }
-//this line of code defines type of incoming props.
-AddTicket.prototype = {
-  change: PropTypes.func.isRequired,
-  submit: PropTypes.func.isRequired,
-  ticket: PropTypes.object.isRequired,
-};
-

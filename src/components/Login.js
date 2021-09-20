@@ -5,7 +5,6 @@ import {
   CssBaseline,
   Grid,
   IconButton,
-  Link,
   makeStyles,
   TextField,
   Typography,
@@ -16,7 +15,8 @@ import PropTypes from "prop-types";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser, userProfile } from "../redux/user/userAction";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
+// import { MLink as Link } from "@material-ui/core";
 
 const useStyle = makeStyles((theme) => ({
   paper: {
@@ -140,14 +140,20 @@ export const Login = ({ formSwitch }) => {
           {isLoading && <CircularProgress color="secondary" thickness={3.6} />}
           <Grid container>
             <Grid item xs>
-              <Link
+              {/* <Link
                 href="#"
                 onClick={() => formSwitch("reset")}
                 variant="h6"
                 underline="none"
               >
                 <IconButton size="small">Forget Password.</IconButton>
-              </Link>
+              </Link> */}
+              <Typography>
+                Don't have account
+                <Link to="/signup" style={{ textDecoration: "none" }}>
+                  sign up
+                </Link>
+              </Typography>
             </Grid>
           </Grid>
         </form>

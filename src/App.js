@@ -12,6 +12,7 @@ import {
   Route,
   BrowserRouter,
 } from "react-router-dom";
+import SignUpPage from "./pages/signup/signupPage";
 
 function App() {
   return (
@@ -31,6 +32,9 @@ function App() {
           <PrivateRoute path="/ticketlist">
             <TicketList />
           </PrivateRoute>
+          <Route path="/signup">
+            <SignUpPage />
+          </Route>
         </Switch>
       </div>
     </BrowserRouter>

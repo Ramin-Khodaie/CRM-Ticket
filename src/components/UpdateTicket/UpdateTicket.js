@@ -1,11 +1,11 @@
 import { Button, TextareaAutosize, Typography } from "@material-ui/core";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   fetchSingleTicket,
   replyTicketMassage,
 } from "../../redux/ticket/ticketAction";
 import { useDispatch, useSelector } from "react-redux";
-import Alert from "@material-ui/lab/Alert";
+import { resetReplyTicketSuccess } from "../../redux/ticket/ticketSlice";
 export default function UpdateTicket({ _id }) {
   const { user } = useSelector((state) => state.user);
   const { replymessage } = useSelector((state) => state.ticket);
@@ -29,11 +29,7 @@ export default function UpdateTicket({ _id }) {
     <div style={{ padding: "10px", marginTop: "0px" }}>
       <form onSubmit={handleOnSubmit}>
         <Typography variant="h6">Reply</Typography>
-        {replymessage && (
-          <Alert variant="outlined" severity="info">
-            {replymessage}
-          </Alert>
-        )}
+
         <Typography variant="subtitle1">
           Please reply your message here or update your ticket
         </Typography>
